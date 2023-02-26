@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from "./components/navbar/Navbar";
+import { useState, useEffect } from "react";
+import { ProgressBar } from 'react-loader-spinner'
+import { Route, Routes, Link } from 'react-router-dom'
+import DetailSurah from "./components/contenalquran/DetailSurah";
 
 function App() {
+  const [Loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="">
+      {Loading ? (
+        <div className="h-screen flex justify-center items-center m-auto ">
+          <div className="">
+            <ProgressBar
+              height="80"
+              width="80"
+              ariaLabel="progress-bar-loading"
+              wrapperStyle={{}}
+              wrapperClass="progress-bar-wrapper"
+              borderColor='#51E5FF'
+              barColor='#101329'
+            />
+            <p className="text-center bt-[-1rem]  text-[#101329] font-sans">Al Qur'an</p>
+          </div>
+        </div>
+      ) : (
+        <Routes>
+          <Route path="/" element={<Navbar />} />
+          <Route path='/surah/:id' element={<DetailSurah />} />
+          <Route path="*" element={<p>page not font</p>} />
+        </Routes>
+      )}
+
+
     </div>
   );
 }
